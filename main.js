@@ -32,7 +32,7 @@ startBtn.addEventListener('click', function() {
 				
 
 			} else {
-				document.getElementById('life' + lifes).src = 'assets/imagens/empty-heart.png'
+				document.getElementById('life' + lifes).src = 'assets/images/empty-heart.png'
 
 				lifes++
 			}
