@@ -1,5 +1,46 @@
-let startBtn = document.querySelector('#start')
+let timer = 0
+let levelUl = document.querySelector('.level-ul')
+let panel = document.querySelector('.panel')
 
+const levels = [{
+	levelName: 'easy',
+	timer: 2000
+}, {
+	levelName: 'normal',
+	timer: 1000
+}, {
+	levelName: 'hard',
+	timer: 800
+}];
+
+levels.forEach(level => {
+	let levelLi = document.createElement('li')
+	levelLi.id = `${level.levelName}`
+	levelLi.innerHTML = `${level.levelName}`
+	levelUl.appendChild(levelLi)
+
+	levelLi.addEventListener('click', () => {
+		levelLi.parentElement.remove()
+		createStartButton()
+
+		let difficultyShow = document.createElement('p')
+		difficultyShow.innerHTML = `${level.levelName}`
+		difficultyShow.className = 'show-difficulty'
+		panel.appendChild(difficultyShow)
+
+		localStorage.setItem("difficultyLevel", level.levelName)
+
+		return level.timer
+	})
+
+
+function createStartButton() {
+	let divButton = document.createElement('div');
+	divButton.className = 'button'
+	divButton.innerHTML = `<button class="btn btn-primary btn-lg p-4" id="start">LET'S PLAY!</button>`
+	area.appendChild(divButton)
+
+let startBtn = document.getElementById('start');
 startBtn.addEventListener('click', function() {
 	this.remove()
 
@@ -27,9 +68,7 @@ startBtn.addEventListener('click', function() {
 		if(document.getElementById('target')) {			
 			if(lifes > 3) {
 				clearInterval(createTarget, timerMin, timerSec)
-				
 				window.location.href = 'game-over.html'
-				
 
 			} else {
 				document.getElementById('life' + lifes).src = 'assets/images/empty-heart.png'
@@ -41,20 +80,19 @@ startBtn.addEventListener('click', function() {
 
 		}
 
-		let positionX = parseInt(Math.random() * width) - 40
-		let positionY = parseInt(Math.random() * height) + 130
+		let positionX = parseInt(Math.random() * width) - 50
+		let positionY = parseInt(Math.random() * height) - 50
 
 		positionX = positionX < 0 ? 0 : positionX
 		positionY = positionY < 0 ? 0 : positionY
 
-
 		let target = document.createElement('span')
 		target.innerHTML = `target`
 		target.className = 'material-symbols-outlined'
-		target.style.left = positionX + 10 + 'px'
+		target.style.left = positionX + 'px'
 		target.style.top = positionY + 'px'
 		target.style.position = 'absolute'
-		document.body.appendChild(target)
+		area.appendChild(target)
 		target.id = 'target'
 
 		target.addEventListener('mousedown', function() {
@@ -66,12 +104,14 @@ startBtn.addEventListener('click', function() {
 			
 		})
 
+		
 		localStorage.setItem("finalScore", i)
 	}
 
 	let createTarget = setInterval(function() {
 		randomPosition()
-	}, 1000)
+	}, level.timer)
+	console.log(level.timer)
 
 	let min = 0
 	let sec = 0
@@ -81,9 +121,7 @@ startBtn.addEventListener('click', function() {
 	}, 60000)
 
 	let timerSec = setInterval(function () {
-
 		sec++
-
 		let time = document.querySelector('#time')
 
 		if(sec < 10) {
@@ -95,10 +133,11 @@ startBtn.addEventListener('click', function() {
 		if (sec > 59) {
 			sec = 0
 		}
-
 		
 	}, 1000)
 
 })
 
+}
 
+});

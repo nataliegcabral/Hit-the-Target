@@ -11,11 +11,13 @@
 <body>
     
     <main class="d-flex flex-column justify-content-center align-items-center">
-        <div class=" game-over text-light m-5">
+        <div class="game-over text-light m-5">
             <h1 class="fw-bold p-3">GAME OVER</h1>
-            <!-- <h2 class="fs-2 p-3 text-uppercase text-center">Statistics</h2> -->
 
-            <p class="fs-2 text-center final-score"></p>
+            <div class="statistics d-flex flex-column align-items-center justify-content-center">
+                <p class="fs-2 text-center final-score"></p>
+                <p class="fs-2 text-center difficulty-level"></p>
+            </div>
         </div>
 
 
@@ -25,10 +27,17 @@
     </main>
     
     <script>
-        const gameOver = new Audio('assets/audio/game-over.mp3')
-        gameOver.play()
+
+        window.addEventListener('load', () => {
+        const gameOverSound = new Audio('assets/audio/game-over.mp3')
+        gameOverSound.play()
+        })
+
         finalScore = document.querySelector('.final-score')
-		finalScore.innerHTML = `Score: </br><span>${localStorage.getItem("finalScore")}</span>`
+		finalScore.innerHTML = `Score: </br><span>${localStorage.getItem("finalScore")}</span>`   
+
+        difficultyLevel = document.querySelector('.difficulty-level')
+		difficultyLevel.innerHTML = `Level: <br><span class="fs-1 text-uppercase">${localStorage.getItem("difficultyLevel")}</span>`   
     </script>
 
     <footer class="text-center position-absolute bottom-0 start-50 translate-middle-x py-1">
